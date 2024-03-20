@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotBlank;
 
 @RestController("/notes")
 @Tag(name = "Notes API")
@@ -34,12 +35,10 @@ public class NotesController {
 	@ApiResponse(responseCode = "200", description = "Successfully Created a Note")
 	@PostMapping
 	public Note createNote(
-			@RequestParam @Parameter(name = "content", description = "Note Content", example = "Sample Note Content") String content) {
+			@RequestParam @NotBlank @Parameter(name = "title", description = "Note Title", example = "Sample Note Title", required = true) String title,
+			@RequestParam @NotBlank @Parameter(name = "body", description = "Note Body", example = "Sample Note Body", required = true) String body) {
 
-		Note note = new Note();
-		note.setContent(content);
-
-		return noteService.addNote(note);
+		return noteService.addNote(new Note(title, body));
 	}
 
 	@Operation(summary = "Retrieves all the stored Notes", description = "Returns the list of stored Notes")
@@ -54,7 +53,8 @@ public class NotesController {
 			@ApiResponse(responseCode = "200", description = "Successfuly found a Note with the given a Note ID"),
 			@ApiResponse(responseCode = "404", description = "Note not found") })
 	@GetMapping("/{id}")
-	public Note getNote(@PathVariable("id") @Parameter(name = "id", description = "Note ID", example = "0") int id) {
+	public Note getNote(
+			@PathVariable("id") @Parameter(name = "id", description = "Note ID", example = "0") int id) {
 		Optional<Note> optionalNote = noteService.getNote(id);
 
 		return optionalNote.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not Found"));
@@ -65,9 +65,13 @@ public class NotesController {
 			@ApiResponse(responseCode = "200", description = "Successfuly updated a Note with the given a Note ID"),
 			@ApiResponse(responseCode = "404", description = "Note not found") })
 	@PutMapping("/{id}")
-	public Note updateNote(@PathVariable("id") @Parameter(name = "id", description = "Note ID", example = "0") int id,
-			@RequestParam @Parameter(name = "content", description = "Note Content", example = "Sample Note Content") String content) {
-		Optional<Note> optionalNote = noteService.updateNote(id, content);
+	public Note updateNote(
+			@PathVariable("id") @Parameter(name = "id", description = "Note ID", example = "0") int id,
+			@RequestParam(required = false) @Parameter(name = "title", description = "Note Title", example = "Sample Note Title") String title,
+			@RequestParam(required = false) @Parameter(name = "body", description = "Note Body", example = "Sample Note Body") String body) {
+		noteService.validateNoteUpdate(title, body);
+
+		Optional<Note> optionalNote = noteService.updateNote(new Note(id, title, body));
 
 		return optionalNote.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not Found"));
 	}
@@ -77,7 +81,8 @@ public class NotesController {
 			@ApiResponse(responseCode = "200", description = "Successfuly deleted a Note with the given a Note ID"),
 			@ApiResponse(responseCode = "404", description = "Note not found") })
 	@DeleteMapping("/{id}")
-	public void deleteNote(@PathVariable("id") @Parameter(name = "id", description = "Note ID", example = "0") int id) {
+	public void deleteNote(
+			@PathVariable("id") @Parameter(name = "id", description = "Note ID", example = "0") int id) {
 		Optional<Note> optionalNote = noteService.deleteNote(id);
 
 		optionalNote.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not Found"));

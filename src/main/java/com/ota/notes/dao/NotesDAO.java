@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.ota.notes.api.model.Note;
@@ -31,10 +32,18 @@ public class NotesDAO {
 		return note;
 	}
 
-	public synchronized Optional<Note> updateNote(int id, String content) {
-		Optional<Note> optionalNote = getNote(id);
+	public synchronized Optional<Note> updateNote(Note pNote) {
+		Optional<Note> optionalNote = getNote(pNote.getId());
 
-		optionalNote.ifPresent(note -> note.setContent(content));
+		optionalNote.ifPresent(note -> {
+
+			if (StringUtils.isNotBlank(pNote.getTitle()))
+				note.setTitle(pNote.getTitle());
+
+			if (StringUtils.isNotBlank(pNote.getBody()))
+				note.setBody(pNote.getBody());
+			
+		});
 
 		return optionalNote;
 	}

@@ -1,6 +1,6 @@
-/Users/jessiebrianrevil/Projects/OTA/notes/src/main/java/com/ota/notes/api/controller/NotesController.java
-/Users/jessiebrianrevil/Projects/OTA/notes/src/main/java/com/ota/notes/service/NotesService.java
-/Users/jessiebrianrevil/Projects/OTA/notes/src/main/java/com/ota/notes/dao/NotesDAO.java
-/Users/jessiebrianrevil/Projects/OTA/notes/src/main/java/com/ota/notes/CacheConfig.java
-/Users/jessiebrianrevil/Projects/OTA/notes/src/main/java/com/ota/notes/NotesApplication.java
-/Users/jessiebrianrevil/Projects/OTA/notes/src/main/java/com/ota/notes/api/model/Note.java
+/Users/jessiebrianrevil/Projects/OTA-Notes/src/main/java/com/ota/notes/dao/NotesDAO.java
+/Users/jessiebrianrevil/Projects/OTA-Notes/src/main/java/com/ota/notes/api/controller/NotesController.java
+/Users/jessiebrianrevil/Projects/OTA-Notes/src/main/java/com/ota/notes/api/model/Note.java
+/Users/jessiebrianrevil/Projects/OTA-Notes/src/main/java/com/ota/notes/service/NotesService.java
+/Users/jessiebrianrevil/Projects/OTA-Notes/src/main/java/com/ota/notes/CacheConfig.java
+/Users/jessiebrianrevil/Projects/OTA-Notes/src/main/java/com/ota/notes/NotesApplication.java
