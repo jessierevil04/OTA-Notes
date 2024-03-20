@@ -3,6 +3,11 @@
 ###### The application consists of a RESTful API that allows users to create, retrieve, update, and delete notes. 
 ###### Each note can consist of a title and a body.
 
+## Technologies
+- Maven
+- Java 17
+- Spring Boot 3.2.3
+
 ## Prerequisite
 - Maven
 - JDK 17
@@ -41,3 +46,4 @@ http://localhost:8080/swagger-ui/index.html
 - The Note Body is mandatory
 - User Handling is not needed for this application
 - User Authentication is not needed for this application
+- Transactional and Rollback Handling is not necessary. Storage is implemented as List
